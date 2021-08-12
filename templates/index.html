@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>California Housing Price Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">California Housing Price Prediction</div>
+
+        <form action="/predict" method="POST">
+            <div class="housing-details">
+                <div class="input-box">
+                    <span class="details">Longitude</span>
+                    <input type="number" name="longitude" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Latitude</span>
+                    <input type="number" name="latitude" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Housing Median Age</span>
+                    <input type="number" name="housing_median_age" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Total Rooms</span>
+                    <input type="number" name="total_rooms" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Total Bedrooms</span>
+                    <input type="number" name="total_bedrooms" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Population</span>
+                    <input type="number" name="population" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Households</span>
+                    <input type="number" name="households" placeholder="<Enter Here>" step="0.01">
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Median Income</span>
+                    <input type="number" name="median_income" placeholder="<Enter Here>" step="0.01">
+                </div>
+            </div>
+
+            <div class="ocean-details">
+                <span class="ocean-details-title">Ocean Proximity</span>
+                <select name="ocean_proximity">
+                    <option selected='selected' id="option-selected">Please Select</option>
+                    <option value="<1H OCEAN">1H OCEAN</option>
+                    <option value="INLAND">INLAND</option>
+                    <option value="NEAR OCEAN">NEAR OCEAN</option>
+                    <option value="NEAR BAY">NEAR BAY</option>
+                    <option value="ISLAND">ISLAND</option>
+                </select>
+            </div>
+
+            <div class="button">
+                <input type="submit" value="Predict">
+            </div>
+
+            <div class="predict-details">
+                {% if flag %}
+                <span class="predict-details-error">Value Error. Check Input.</span>
+                {% elif predicted_value %}
+                <span class="predict-details-title">Predicted Housing Value : &nbsp;&nbsp;</span>
+                <span class="predict-details-value">{{predicted_value}} USD</span>
+            </div>
+            {% endif %}
+        </form>
+
+    </div>
+    
+
+</body>
+
+</html>

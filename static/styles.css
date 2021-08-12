@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #71b7e6, #9d59b6);
+}
+.container{
+    max-width: 700px;
+    width: 100%;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.container .title{
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+}
+.container .title::before{
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: rgb(255, 0, 0);
+
+}
+.container form .housing-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .housing-details .input-box{
+    margin: 20px 0 12px 0;
+    width: calc(100% / 2 - 20px);
+}
+.housing-details .input-box .details{
+    display: block;
+    font-weight: 500px;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.housing-details .input-box input{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+.housing-details .input-box input:focus{
+    border-color: green;
+}
+form .ocean-details{
+    margin: 20px 0 12px 0;
+}
+form .ocean-details .ocean-details-title{
+    font-size: 20px;
+    font-weight: 500;
+}
+form .button{
+    height: 40px;
+    margin: 45px 0;
+    background: #9d59b6;
+}
+form .button input{
+    height: 100%;
+    width: 100%;
+}
+form .predict-details{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+form .predict-details .predict-details-value{
+    color: red;
+}
+form .predict-details .predict-details-error{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background: red;
+    width: 100%;
+    color: azure;
+}
+.ocean-details select{
+    font-size: 13px;
+    padding: 10px 8px 10px 14px;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+  }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+display: none;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+  }
