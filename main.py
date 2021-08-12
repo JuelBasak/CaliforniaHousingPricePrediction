@@ -42,6 +42,7 @@ def model_predict():
     final_model = joblib.load('./model/model.pkl')
 
     predicted_value = final_model.predict(new_data_prepared)
+    return render_template('result.html', predicted_value=predicted_value[0])
     print(predicted_value[0])  
 
 class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
