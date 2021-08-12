@@ -24,25 +24,67 @@ def homepage():
 @app.route('/predict', methods=['POST'])
 def model_predict():
     longitude = request.form['longitude']
-    latitude = request.form['latitude']
-    housing_median_age = request.form['housing_median_age']
-    total_rooms = request.form['total_rooms']
-    total_bedrooms = request.form['total_bedrooms']
-    population = request.form['population']
-    households = request.form['households']
-    median_income = request.form['median_income']
-    ocean_proximity = request.form['ocean_proximity']
+    if longitude:
+        longitude = float(longitude)
+    else:
+        longitude = 0
 
+    latitude = request.form['latitude']
+    if latitude:
+        latitude = request.form['latitude']
+    else:
+        latitude = 0
+    
+    housing_median_age = request.form['housing_median_age']
+    if housing_median_age:
+        housing_median_age = float(housing_median_age)
+    else:
+        housing_median_age = 0
+
+    total_rooms = request.form['total_rooms']
+    if total_rooms:
+        total_rooms = float(total_rooms)
+    else:
+        total_rooms = 0
+
+    total_bedrooms = request.form['total_bedrooms']
+    if total_bedrooms:
+        total_bedrooms = float(total_bedrooms)
+    else:
+        total_bedrooms = 0
+
+    population = request.form['population']
+    if population:
+        population = float(population)
+    else:
+        population = 0
+
+    households = request.form['households']
+    if households:
+        households = float(households)
+    else:
+        households = 0
+
+    median_income = request.form['median_income']
+    if median_income:
+        median_income = float(median_income)
+    else:
+        median_income = 0
+
+    ocean_proximity = request.form['ocean_proximity']
     
     new_data = [[longitude, latitude, housing_median_age, total_rooms, total_bedrooms, population, households, median_income, ocean_proximity]]
     new_df = pd.DataFrame(new_data, columns=num_attribs + cat_attribs)
 
-    new_data_prepared = full_pipeline.transform(new_df)
+    try:
+        new_data_prepared = full_pipeline.transform(new_df)
 
-    final_model = joblib.load('./model/model.pkl')
+        final_model = joblib.load('./model/model.pkl')
 
-    predicted_value = final_model.predict(new_data_prepared)
-    return render_template('index.html', predicted_value=predicted_value[0]) 
+        predicted_value = final_model.predict(new_data_prepared)
+    except Exception:
+            return render_template('index.html', flag = True) 
+    return render_template('index.html', predicted_value=predicted_value[0], flag = False) 
 
 class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
 

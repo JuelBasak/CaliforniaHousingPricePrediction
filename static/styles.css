@@ -48,7 +48,7 @@ form .user-details .input-box{
 }
 .user-details .input-box .details{
     display: block;
-    font-weight: 500;
+    font-weight: 500px;
     font-size: 20px;
     margin-bottom: 5px;
 }
@@ -65,10 +65,39 @@ form .user-details .input-box{
 .user-details .input-box input:focus{
     border-color: green;
 }
+form .ocean-details{
+    margin: 20px 0 12px 0;
+}
 form .ocean-details .ocean-details-title{
     font-size: 20px;
     font-weight: 500;
 }
-form .predict-details .predict-details-title{
-    font-size: 100px;
+form .button{
+    height: 40px;
+    margin: 45px 0;
+    background: #9d59b6;
+}
+form .button input{
+    height: 100%;
+    width: 100%;
+}
+form .predict-details{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+form .predict-details .predict-details-value{
+    color: red;
+}
+form .predict-details .predict-details-error{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background: red;
+    width: 100%;
+    color: azure;
 }
