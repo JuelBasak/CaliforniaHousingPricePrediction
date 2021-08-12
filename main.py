@@ -17,9 +17,11 @@ from sklearn.compose import ColumnTransformer
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET'])
 def homepage():
     return render_template('index.html', loading=False)
+
 
 @app.route('/predict', methods=['POST'])
 def model_predict():
@@ -172,4 +174,4 @@ def model_process():
 
 if __name__=='__main__':
     model_process()
-    app.run(debug=True)
+    app.run(debug=False)

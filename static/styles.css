@@ -36,23 +36,23 @@ body{
     background: rgb(255, 0, 0);
 
 }
-.container form .user-details{
+.container form .housing-details{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-form .user-details .input-box{
+form .housing-details .input-box{
     margin: 20px 0 12px 0;
     width: calc(100% / 2 - 20px);
 }
-.user-details .input-box .details{
+.housing-details .input-box .details{
     display: block;
     font-weight: 500px;
     font-size: 20px;
     margin-bottom: 5px;
 }
-.user-details .input-box input{
+.housing-details .input-box input{
     height: 45px;
     width: 100%;
     outline: none;
@@ -61,8 +61,9 @@ form .user-details .input-box{
     padding-left: 15px;
     font-size: 16px;
     border-bottom-width: 2px;
+    transition: all 0.3s ease;
 }
-.user-details .input-box input:focus{
+.housing-details .input-box input:focus{
     border-color: green;
 }
 form .ocean-details{
@@ -101,3 +102,19 @@ form .predict-details .predict-details-error{
     width: 100%;
     color: azure;
 }
+.ocean-details select{
+    font-size: 13px;
+    padding: 10px 8px 10px 14px;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+  }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+display: none;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+  }
