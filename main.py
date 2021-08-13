@@ -36,7 +36,7 @@ def model_predict():
         latitude = request.form['latitude']
     else:
         latitude = 0
-    
+
     housing_median_age = request.form['housing_median_age']
     if housing_median_age:
         housing_median_age = float(housing_median_age)
@@ -74,8 +74,10 @@ def model_predict():
         median_income = 0
 
     ocean_proximity = request.form['ocean_proximity']
-    
-    new_data = [[longitude, latitude, housing_median_age, total_rooms, total_bedrooms, population, households, median_income, ocean_proximity]]
+
+    new_data = [
+        [longitude, latitude, housing_median_age, total_rooms, total_bedrooms, population, households, median_income,
+         ocean_proximity]]
     new_df = pd.DataFrame(new_data, columns=num_attribs + cat_attribs)
 
     try:
@@ -85,8 +87,9 @@ def model_predict():
 
         predicted_value = final_model.predict(new_data_prepared)
     except Exception:
-            return render_template('index.html', flag = True) 
-    return render_template('index.html', predicted_value=predicted_value[0], flag = False) 
+        return render_template('index.html', flag=True)
+    return render_template('index.html', predicted_value=predicted_value[0], flag=False)
+
 
 class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
 
@@ -130,13 +133,13 @@ num_pipeline = Pipeline([
 ])
 
 num_attribs = ['longitude',
-            'latitude',
-            'housing_median_age',
-            'total_rooms',
-            'total_bedrooms',
-            'population',
-            'households',
-            'median_income']
+               'latitude',
+               'housing_median_age',
+               'total_rooms',
+               'total_bedrooms',
+               'population',
+               'households',
+               'median_income']
 
 cat_attribs = ['ocean_proximity']
 
@@ -144,6 +147,7 @@ full_pipeline = ColumnTransformer([
     ('num', num_pipeline, num_attribs),
     ('cat', OneHotEncoder(), cat_attribs)
 ])
+
 
 def model_process():
     DOWNLOAD_ROOT = 'https://raw.githubusercontent.com/ageron/handson-ml2/master/'
@@ -163,7 +167,6 @@ def model_process():
         strat_train_set = housing.loc[train_index]
         strat_test_set = housing.loc[test_index]
 
-
     strat_train_set.drop('income_cat', axis=1, inplace=True)
     strat_test_set.drop('income_cat', axis=1, inplace=True)
 
@@ -172,6 +175,6 @@ def model_process():
     full_pipeline.fit_transform(housing.drop('median_house_value', axis=1))
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     model_process()
     app.run(debug=False)
