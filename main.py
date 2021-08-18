@@ -174,11 +174,12 @@ def model_predict():
         print('Working 3')
         predicted_value = final_model.predict(new_data_prepared)
         print('Working 4')
-    except Exception:
+    except Exception as exp:
+        print('Exception Occured as ', exp)
         return render_template('index.html', flag=True)
     return render_template('index.html', predicted_value=predicted_value[0], flag=False)
 
-    
+
 if __name__ == '__main__':
     model_process()
     app.run(debug=False)
