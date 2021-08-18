@@ -17,10 +17,53 @@ from sklearn.compose import ColumnTransformer
 
 app = Flask(__name__)
 
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+
+    def __init__(self, add_bedrooms_per_room=True):
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        rooms_per_household = X[:, room_ix] / X[:, households_ix]
+        population_per_household = X[:, population_ix] / X[:, households_ix]
+
+        if self.add_bedrooms_per_room:
+            bedrooms_per_room = X[:, bedroom_ix] / X[:, room_ix]
+            return np.c_[X, rooms_per_household, population_per_household, bedrooms_per_room]
+        else:
+            return np.c_[X, rooms_per_household, population_per_household]
+
+
+room_ix, bedroom_ix, population_ix, households_ix = 3, 4, 5, 6
+
+num_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('attribs_adder', CombinedAttributesAdder()),
+    ('std_scaler', StandardScaler())
+])
+
+num_attribs = ['longitude',
+               'latitude',
+               'housing_median_age',
+               'total_rooms',
+               'total_bedrooms',
+               'population',
+               'households',
+               'median_income']
+
+cat_attribs = ['ocean_proximity']
+
+full_pipeline = ColumnTransformer([
+    ('num', num_pipeline, num_attribs),
+    ('cat', OneHotEncoder(), cat_attribs)
+])
+
 
 @app.route('/', methods=['GET'])
 def homepage():
-    return render_template('index.html', loading=False)
+    return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST'])
@@ -94,25 +137,6 @@ def model_predict():
     return render_template('index.html', predicted_value=predicted_value[0], flag=False)
 
 
-class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
-
-    def __init__(self, add_bedrooms_per_room=True):
-        self.add_bedrooms_per_room = add_bedrooms_per_room
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        rooms_per_household = X[:, room_ix] / X[:, households_ix]
-        population_per_household = X[:, population_ix] / X[:, households_ix]
-
-        if self.add_bedrooms_per_room:
-            bedrooms_per_room = X[:, bedroom_ix] / X[:, room_ix]
-            return np.c_[X, rooms_per_household, population_per_household, bedrooms_per_room]
-        else:
-            return np.c_[X, rooms_per_household, population_per_household]
-
-
 def fetch_data(housing_url, housing_path):
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, 'housing.tgz')
@@ -125,31 +149,6 @@ def fetch_data(housing_url, housing_path):
 def load_data(housing_path):
     csv_path = os.path.join(housing_path, 'housing.csv')
     return pd.read_csv(csv_path)
-
-
-room_ix, bedroom_ix, population_ix, households_ix = 3, 4, 5, 6
-
-num_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='median')),
-    ('attribs_adder', CombinedAttributesAdder()),
-    ('std_scaler', StandardScaler())
-])
-
-num_attribs = ['longitude',
-               'latitude',
-               'housing_median_age',
-               'total_rooms',
-               'total_bedrooms',
-               'population',
-               'households',
-               'median_income']
-
-cat_attribs = ['ocean_proximity']
-
-full_pipeline = ColumnTransformer([
-    ('num', num_pipeline, num_attribs),
-    ('cat', OneHotEncoder(), cat_attribs)
-])
 
 
 def model_process():
