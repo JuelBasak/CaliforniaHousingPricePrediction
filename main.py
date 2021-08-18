@@ -176,5 +176,5 @@ def model_process():
 
 
 if __name__ == '__main__':
-    # model_process()
+    model_process()
     app.run(debug=False)
