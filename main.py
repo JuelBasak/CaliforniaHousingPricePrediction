@@ -82,11 +82,13 @@ def model_predict():
     new_df = pd.DataFrame(new_data, columns=num_attribs + cat_attribs)
 
     try:
+        print('Working 1')
         new_data_prepared = full_pipeline.transform(new_df)
-
+        print('Working 2')
         final_model = joblib.load('./model/model.pkl')
-
+        print('Working 3')
         predicted_value = final_model.predict(new_data_prepared)
+        print('Working 4')
     except Exception:
         return render_template('index.html', flag=True)
     return render_template('index.html', predicted_value=predicted_value[0], flag=False)
