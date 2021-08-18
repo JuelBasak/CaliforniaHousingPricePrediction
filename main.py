@@ -61,8 +61,6 @@ full_pipeline = ColumnTransformer([
 ])
 
 
-
-
 def fetch_data(housing_url, housing_path):
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, 'housing.tgz')
@@ -99,7 +97,8 @@ def model_process():
     strat_test_set.drop('income_cat', axis=1, inplace=True)
 
     housing = strat_train_set.copy()
-
+    
+    global full_pipeline
     full_pipeline.fit_transform(housing.drop('median_house_value', axis=1))
 
 
