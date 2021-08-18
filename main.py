@@ -78,6 +78,7 @@ def model_predict():
     new_data = [
         [longitude, latitude, housing_median_age, total_rooms, total_bedrooms, population, households, median_income,
          ocean_proximity]]
+         print(new_data)
     new_df = pd.DataFrame(new_data, columns=num_attribs + cat_attribs)
 
     try:
